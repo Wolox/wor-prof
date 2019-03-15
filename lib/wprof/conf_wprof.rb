@@ -15,9 +15,8 @@ module WProf
     class << self
       def get_value(param)
         unless Rails.application.nil?
-          Rails.configuration.x.wprof.each do |key, value|
-            return value if key == param
-          end
+          value = Rails.configuration.x.wprof[param]
+          return value unless value.nil?
         end
         DEFAULTS_CONFIGS[param]
       end
