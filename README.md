@@ -1,27 +1,33 @@
 # Wor-Prof
 
-Wor-Prof (Wprof!) is a gem for RoR that permited capture and save data that can be used for performance mesure. It use ActiveSupport::Notifications for catch all request to your Rails app, but not only request from controller. Wor-Prof you can catch request times from [HTTParty](https://github.com/jnunemaker/httparty) and your own code methods (with a simple configuration).
-Then you save your data in CSV file, Database or Sending to an External Http service.
+Wor-prof (Wprof) is a gem for Ruby On Rails which its only purpose is to measure a RoR app's performance through a profile with different times of response. In order to accomplish that, Wprof uses ActiveSupport::Notifications (available in Rails since v4.0.2) to capture every action from his controllers. However, there's more. when using httparty in your project, you can capture every done request to external services. Do you have one or two methods that would like to know how long they take to execute? With Wprof you can find out.
 
-## Installation
-Add the following line to your application's Gemfile:
+Then, every data obtained can be reported in several ways, choose one from the Rails logger: database file, CSV text or go ahead and do a Post request wherever you want... Do it both synchronously or asynchronously.
+
+### Installation 
+
+Add the next line to the gemfile from your Rails application:
 
 ```ruby
 gem 'wor-prof'
 ```
 
-And then execute:
+And then, execute:
 ```bash
 $ bundle install
 ```
-## Usage
-### Basic usage
-COMPLETE LATER.
-COMPLETE LATER.
-COMPLETE LATER.
-COMPLETE LATER.
-COMPLETE LATER.
-COMPLETE LATER.
+**That's it!!** At server execution, WProf immediately begins to work with default settings, so you won't need to configure anything if it matches with your needs, otherwise you can check **Available Settings**.
+```
+## Complete User Guide!?? Where??
+
+If you want to know more about this gem and how use it correctly, please visit Wiki sections. There you will find all configurations available and every detail.
+
+## Notes!!!
+
+This gem use [HTTParty](https://github.com/jnunemaker/httparty) and [Sidekiq](https://github.com/mperham/sidekiq).
+If you don't know anything about they, take a look in their repos!
+
+
 ## Contributing
 
 1. Fork it

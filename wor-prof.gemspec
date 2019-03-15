@@ -5,7 +5,8 @@ Gem::Specification.new do |s|
   s.version     = Wprof::VERSION
   s.date        = '2019-03-11'
   s.summary     = 'Wor-Profiling Gem for Rails'
-  s.description = 'Make Description later'
+  s.description = "Wor-prof (Wprof) is a gem for Ruby On Rails which its only purpose is to measure a RoR app's performance through a profile with different times of response.
+  Catch all request and save them into a database, csv file or send to external service, it's easy to configure and use. Wprof can take measure of HTTParty requests and your own methods."
   s.authors     = ['mcolombo87']
   s.author      = 'Maximiliano Colombo'
   s.email       = ['maximiliano.colombo@wolox.com.ar', 'mcolombo87@gmail.com']
