@@ -5,7 +5,7 @@ module WProf
       reporter_type: 'LOGGER',
       csv_type: 'SPLIT',
       async: false,
-      httparty_methods_to_trace: %w[get put delete post].freeze,
+      httparty_methods_to_trace: %w[get put delete post patch].freeze,
       external_url: nil,
       external_headers: nil,
       custom_methods: nil,

@@ -7,7 +7,8 @@ class WprofGenerator < Rails::Generators::Base
   private
 
   def init_wprof
-    "# -----------------------------------------
+    <<~CONTENT
+    # -----------------------------------------
     # Uncomment and set for use custom options.
     # -----------------------------------------
     Rails.application.configure do
@@ -36,6 +37,6 @@ class WprofGenerator < Rails::Generators::Base
     ## By default Wor-Prof use Rails.root
     # config.x.wprof.file_path = '/home/mcolombo/examplefolder'
     end
-    "
+    CONTENT
   end
 end
