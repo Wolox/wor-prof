@@ -1,4 +1,4 @@
-RSpec.describe 'Wprof General' do
+RSpec.describe 'Wprof Generate Profiling' do
   it 'has a version number' do
     expect(Wprof::VERSION).not_to be nil
   end

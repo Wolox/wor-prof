@@ -19,12 +19,17 @@ Gem::Specification.new do |s|
     'http://rubygems.org/gems/wor-prof'
   s.license = 'MIT'
   s.extra_rdoc_files = ['README.md', 'doc/user-guide.md']
-  s.required_ruby_version = '>= 2.0.0'
+  s.required_ruby_version = '>= 2.2.0'
 
   s.add_dependency 'rails', '>= 4.0.2'
   s.add_dependency 'sidekiq'
   s.add_dependency 'httparty'
   s.add_development_dependency "bundler", "~> 1.17"
+  s.add_development_dependency "byebug"
+  s.add_development_dependency 'factory_bot_rails'
+  s.add_development_dependency 'faker'
+  s.add_development_dependency 'rails', '>= 4.0.2'
   s.add_development_dependency "rake", "~> 10.0"
   s.add_development_dependency "rspec", "~> 3.0"
+
 end

@@ -1,5 +1,8 @@
-require "bundler/setup"
-require "wprof"
+require 'bundler/setup'
+require 'rails'
+require 'Wprof'
+require 'byebug'
+require 'spec/support/mocks/rails_config_mock'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
