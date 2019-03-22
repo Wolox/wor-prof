@@ -3,12 +3,13 @@ class GenProf
     @event = event
     @db_runtime = WProf::Config.get_value(:db_runtime)
     @async_report = WProf::Config.get_value(:async)
-    generate_profiling(rec_type)
+    @rec_type = rec_type
+    generate_profiling
   end
 
-  def generate_profiling(rec_type)
+  def generate_profiling
     generate_common_params
-    generate_custom_params(rec_type)
+    generate_custom_params
     deploy_reporter
   end
 
@@ -23,8 +24,8 @@ class GenProf
     }
   end
 
-  def generate_custom_params(rec_type)
-    case rec_type
+  def generate_custom_params
+    case @rec_type
     when :standard
       app_params
     when :service
@@ -62,9 +63,9 @@ class GenProf
 
   def deploy_reporter
     if @async_report
-      WprofReporter.perform_async(@params, rec_type)
+      WprofReporter.perform_async(@params, @rec_type)
     else
-      WprofReporter.new.perform(@params, rec_type)
+      WprofReporter.new.perform(@params, @rec_type)
     end
   end
 
