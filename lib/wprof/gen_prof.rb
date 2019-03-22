@@ -7,7 +7,23 @@ class GenProf
   end
 
   def generate_profiling(rec_type)
-    common_params
+    generate_common_params
+    generate_custom_params(rec_type)
+    deploy_reporter
+  end
+
+  private
+
+  def generate_common_params
+    @params = {
+      transaction_id: @event.transaction_id,
+      total_time: _format_time(@event.duration),
+      start_dt: @event.time,
+      end_dt: @event.end
+    }
+  end
+
+  def generate_custom_params(rec_type)
     case rec_type
     when :standard
       app_params
@@ -16,18 +32,6 @@ class GenProf
     when :custom
       custom_params
     end
-    @async_report ? WprofReporter.perform_async(@params, rec_type) : WprofReporter.new.perform(@params, rec_type) # rubocop:disable Metrics/LineLength
-  end
-
-  private
-
-  def common_params
-    @params = {
-      transaction_id: @event.transaction_id,
-      total_time: _format_time(@event.duration),
-      start_dt: @event.time,
-      end_dt: @event.end
-    }
   end
 
   def app_params
@@ -54,6 +58,14 @@ class GenProf
       method: @event.payload[:method]
     }
     @params.merge!(for_customs_only)
+  end
+
+  def deploy_reporter
+    if @async_report
+      WprofReporter.perform_async(@params, rec_type)
+    else
+      WprofReporter.new.perform(@params, rec_type)
+    end
   end
 
   def _format_time(time)
