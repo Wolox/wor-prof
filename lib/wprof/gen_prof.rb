@@ -1,4 +1,6 @@
 class GenProf
+  include Wprof::Supports::StyleSupport
+
   def initialize(event, rec_type)
     @event = event
     @db_runtime = WProf::Config.get_value(:db_runtime)
@@ -18,7 +20,7 @@ class GenProf
   def generate_common_params
     @params = {
       transaction_id: @event.transaction_id,
-      total_time: _format_time(@event.duration),
+      total_time: format_time(@event.duration),
       start_dt: @event.time,
       end_dt: @event.end
     }
@@ -41,7 +43,7 @@ class GenProf
       controller: @event.payload[:controller],
       url: @event.payload[:path]
     }
-    for_app_only[:db_runtime] = _format_time(@event.payload[:db_runtime]) if @db_runtime
+    for_app_only[:db_runtime] = format_time(@event.payload[:db_runtime]) if @db_runtime
     @params.merge!(for_app_only)
   end
 
@@ -67,9 +69,5 @@ class GenProf
     else
       WprofReporter.new.perform(@params, @rec_type)
     end
-  end
-
-  def _format_time(time)
-    time.round(4)
   end
 end
