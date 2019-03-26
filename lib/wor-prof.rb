@@ -11,6 +11,6 @@ module Wprof
   def self.included(base)
     load 'wprof/wprof_modules.rb'
     base.extend(ForHttparty) if base.include?(HTTParty)
-    base.prepend(CustomMethods) if WProf::Config.get_value(:custom_methods).present?
+    base.prepend(CustomMethods) unless WProf::Config.get_value(:custom_methods).nil?
   end
 end

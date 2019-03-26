@@ -18,11 +18,11 @@ class WprofReporter
     when 'LOGGER'
       logger_report
     when 'FILE'
-      file_report
+      generate_file_report
     when 'DATABASE'
       db_report
     when 'EXTERNAL'
-      external_report
+      generate_external_report
     else
       logger_report
     end
