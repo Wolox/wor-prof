@@ -1,6 +1,4 @@
 RSpec.describe 'Wprof Configuration File' do
-  require 'support/mocks/rails_config_mock'
-  require 'wprof/conf_wprof'
   context 'Check default values defined in class' do
     let(:defaults) { WProf::Config::DEFAULTS_CONFIGS }
 
