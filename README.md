@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Wolox/wor-prof.svg?branch=master)](https://travis-ci.org/Wolox/wor-prof)
+
 # Wor-Prof
 
 Wor-prof (Wprof) is a gem for Ruby On Rails which its only purpose is to measure a RoR app's performance through a profile with different times of response. In order to accomplish that, Wprof uses ActiveSupport::Notifications (available in Rails since v4.0.2) to capture every action from his controllers. However, there's more. when using httparty in your project, you can capture every done request to external services. Do you have one or two methods that would like to know how long they take to execute? With Wprof you can find out.
