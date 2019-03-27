@@ -18,4 +18,3 @@ RSpec.describe 'Wprof Generate Profiling' do
     end
   end
 end
-

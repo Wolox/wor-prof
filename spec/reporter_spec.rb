@@ -60,7 +60,9 @@ RSpec.describe 'Wprof Generate Profiling' do
         it 'send post without set url expected handled error' do
           allow(Rails).to receive_messages(wprof: { reporter_type: 'EXTERNAL' })
           record = WprofReporter.new.perform(data, rec_type)
-          expect(record).to eq('An error was raised when WProf tried to send data to reporter: bad argument (expected URI object or URI string)')
+          specific_msg = 'bad argument (expected URI object or URI string)'
+          msj = "An error was raised when WProf tried to send data to reporter: #{specific_msg}"
+          expect(record).to eq(msj)
         end
       end
     end

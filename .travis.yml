@@ -1,0 +1,26 @@
+language: ruby
+rvm:
+  - 2.2.0
+
+env:
+  global:
+    - RUBY_GC_MALLOC_LIMIT=90000000
+    - RUBY_GC_HEAP_FREE_SLOTS=200000
+    - SECURITY_SECRET_TOKEN=M6NZXGS8uXQUzLpd7Eu0qw
+
+before_install:
+  - "echo '--colour' > ~/.rspec"
+  - "echo 'gem: --no-document' > ~/.gemrc"
+  # Solves rainbow issue: https://github.com/sickill/rainbow/issues/48
+  - gem update --system
+
+script:
+  - bundle exec rspec spec -fd
+  - bundle exec rubocop app spec -R --format simple
+
+notifications:
+ email:
+    - maximiliano.colombo@wolox.com.ar
+
+cache:
+  bundler: true

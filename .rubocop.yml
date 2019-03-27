@@ -35,6 +35,9 @@ RSpec/ExampleLength:
 RSpec/AnyInstance:
   Enabled: false
 
+RSpec/DescribeClass:
+  Enabled: false
+
 RSpec/MultipleExpectations:
   Enabled: false
 
