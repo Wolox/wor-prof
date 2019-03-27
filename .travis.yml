@@ -2,6 +2,10 @@ language: ruby
 rvm:
   - 2.2.0
 
+addons:
+  code_climate:
+    repo_token: 2fcb230ef397cb43c693b113105b17ca39a3a65ac5093ca3096cbf6a3c0f1a98
+
 env:
   global:
     - RUBY_GC_MALLOC_LIMIT=90000000
