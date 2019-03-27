@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
     'http://rubygems.org/gems/wor-prof'
   s.license = 'MIT'
   s.extra_rdoc_files = ['README.md', 'doc/user-guide.md']
-  s.required_ruby_version = '>= 2.2.0'
+  s.required_ruby_version = '>= 2.5.3'
 
   s.add_dependency 'rails', '>= 4.0.2'
   s.add_dependency 'sidekiq'
