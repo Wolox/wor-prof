@@ -14,7 +14,6 @@ env:
 before_install:
   - "echo '--colour' > ~/.rspec"
   - "echo 'gem: --no-document' > ~/.gemrc"
-  - gem update --system
 
 script:
   - bundle exec rspec spec -fd
