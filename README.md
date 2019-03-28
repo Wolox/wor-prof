@@ -18,8 +18,9 @@ And then, execute:
 ```bash
 $ bundle install
 ```
-**That's it!!** At server execution, WProf immediately begins to work with default settings, so you won't need to configure anything if it matches with your needs, otherwise you can check **Available Settings**.
+**That's it!!** At server execution, WProf immediately begins to work with default settings, so you won't need to configure anything if it matches with your needs, otherwise you can check **Available Settings** [here!](https://github.com/Wolox/wor-prof/wiki/User-Guide#available-configurations)
 ```
+
 ## Complete User Guide!?? Where??
 
 If you want to know more about this gem and how use it correctly, please visit Wiki sections. There you will find all configurations available and every detail.
