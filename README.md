@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/Wolox/wor-prof.svg?branch=master)](https://travis-ci.org/Wolox/wor-prof)
+[![Code Climate](https://codeclimate.com/github/Wolox/wor-prof/badges/gpa.svg)](https://codeclimate.com/github/Wolox/wor-prof)
+[![Test Coverage](https://codeclimate.com/github/Wolox/wor-prof/badges/coverage.svg)](https://codeclimate.com/github/Wolox/wor-prof/coverage)
 
 # Wor-Prof
 
@@ -19,7 +21,6 @@ And then, execute:
 $ bundle install
 ```
 **That's it!!** At server execution, WProf immediately begins to work with default settings, so you won't need to configure anything if it matches with your needs, otherwise you can check **Available Settings** [here!](https://github.com/Wolox/wor-prof/wiki/User-Guide#available-configurations)
-```
 
 ## Complete User Guide!?? Where??
 
@@ -43,14 +44,17 @@ If you don't know anything about they, take a look in their repos!
 5. Run rspec tests (`bundle exec rspec`)
 6. Push your branch (`git push origin my-new-feature`)
 7. Create a new Pull Request
-
+---
 ## About ##
 
-This project was developed by [Maximiliano Colombo](https://github.com/mcolombo87) at [Wolox](http://www.wolox.com.ar).
-Maintainers: [Maximiliano Colombo](https://github.com/mcolombo87).
-Contributors: Waiting For You!!!
+*This project was **developed** by ***[Maximiliano Colombo](https://github.com/mcolombo87)*** at ***[Wolox](http://www.wolox.com.ar).****
+**Maintainers:** [Maximiliano Colombo](https://github.com/mcolombo87).
+**Contributors:** Waiting For You!!!
+
+
 ![Wolox](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)
 
+---
 ## License
 
 **wor-prof** is available under the MIT [license](https://raw.githubusercontent.com/Wolox/wor-prof/master/LICENSE.md).
