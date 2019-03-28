@@ -25,8 +25,11 @@ $ bundle install
 ## Complete User Guide!?? Where??
 
 If you want to know more about this gem and how use it correctly, please visit Wiki sections. There you will find all configurations available and every detail.
+
 [WIKI LINK -ALL DOCS HERE!](https://github.com/Wolox/wor-prof/wiki)
+
 [ENGLISH VERSION](https://github.com/Wolox/wor-prof/wiki/User-Guide)
+
 [VERSION ESPAÑOL](https://github.com/Wolox/wor-prof/wiki/Guia-de-Usuario)
 
 ## Notes!!!
@@ -48,7 +51,9 @@ If you don't know anything about they, take a look in their repos!
 ## About ##
 
 *This project was **developed** by ***[Maximiliano Colombo](https://github.com/mcolombo87)*** at ***[Wolox](http://www.wolox.com.ar).****
+
 **Maintainers:** [Maximiliano Colombo](https://github.com/mcolombo87).
+
 **Contributors:** Waiting For You!!!
 
 
