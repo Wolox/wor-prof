@@ -5,24 +5,24 @@ RSpec.describe 'Wprof Generate Profiling' do
         allow(GenProf).to receive(:deploy_reporter)
       end
       let(:params_exp) { %i[transaction_id total_time start_dt end_dt] }
+      let(:new_gen_prof) do
+        ->(rec_type) { GenProf.new(Event.new, rec_type) }
+      end
+      let(:params_got) do
+        ->(rec_type) { new_gen_prof[rec_type].instance_variable_get(:@params).keys }
+      end
 
       it 'If rec_type as standard' do
-        new_gen_prof = GenProf.new(Event.new, :standard)
         params_exp.concat(%i[code controller url db_runtime])
-        params_got = new_gen_prof.instance_variable_get(:@params).keys
-        expect(params_got).to eq(params_exp)
+        expect(params_got[:standard]).to eq(params_exp)
       end
       it 'If rec_type as service' do
-        new_gen_prof = GenProf.new(Event.new, :service)
         params_exp.concat(%i[code service_hostname request_uri])
-        params_got = new_gen_prof.instance_variable_get(:@params).keys
-        expect(params_got).to eq(params_exp)
+        expect(params_got[:service]).to eq(params_exp)
       end
       it 'If rec_type as custom' do
-        new_gen_prof = GenProf.new(Event.new, :custom)
         params_exp.concat(%i[method])
-        params_got = new_gen_prof.instance_variable_get(:@params).keys
-        expect(params_got).to eq(params_exp)
+        expect(params_got[:custom]).to eq(params_exp)
       end
     end
   end

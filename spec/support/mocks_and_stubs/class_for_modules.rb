@@ -10,11 +10,13 @@ class ClassForModules
   include HTTParty
   include Wprof
 
+  URL_EXTERNAL_SERVICE = 'http://www.testexternal.com/external'.freeze
+
   def foo_method
     'Im foo'
   end
 
   def consume_external_service
-    self.class.get('http://www.testexternal.com/external')
+    self.class.get(URL_EXTERNAL_SERVICE)
   end
 end
