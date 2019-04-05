@@ -328,3 +328,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/ruby,rubymine,rails,emacs,vim,sublimetext,osx,macos,linux,windows
+.rspec_status

@@ -12,7 +12,10 @@ Documentation:
   Enabled: false
 
 LineLength:
-  Max: 99
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 20
 
 FrozenStringLiteralComment:
   Enabled: false
@@ -30,6 +33,9 @@ RSpec/ExampleLength:
   Enabled: false
 
 RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/DescribeClass:
   Enabled: false
 
 RSpec/MultipleExpectations:

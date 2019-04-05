@@ -1,4 +1,5 @@
 require 'wprof/version'
+require 'wprof/supports/style_support'
 require 'wprof/conf_wprof'
 require 'wprof/reporters/db_report'
 require 'wprof/reporters/external_report'
@@ -6,6 +7,7 @@ require 'wprof/reporters/file_report'
 require 'wprof/wprof_reporter'
 require 'wprof/gen_prof'
 require 'wprof/wprof_subscriptors'
+
 
 module Wprof
   def self.included(base)
