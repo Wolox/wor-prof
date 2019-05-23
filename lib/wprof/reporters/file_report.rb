@@ -5,7 +5,7 @@ module Wprof
         require 'csv'
         csv_type = WProf::Config.get_value(:csv_type) # rubocop:disable Lint/UselessAssignment
         path = WProf::Config.get_value(:file_path)
-        send('write_#{csv_type.undercase}_file', path)
+        send("write_#{csv_type.underscore}_file", path)
       end
 
       def write_mix_file(path)
