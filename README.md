@@ -55,7 +55,7 @@ If you don't know anything about they, take a look in their repos!
 **Maintainers:** [Maximiliano Colombo](https://github.com/mcolombo87).
 
 **Contributors:** Waiting For You!!!
-
+[Samir Tapiero](https://github.com/blacksam07)
 
 ![Wolox](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)
 
