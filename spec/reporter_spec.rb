@@ -55,6 +55,19 @@ RSpec.describe 'Wprof Generate Profiling' do
           expect(record).to eq(msj)
         end
       end
+
+      describe 'And reporter Type is FILE' do
+        before do
+          WProf::Configuration.configure do |config|
+            config.reporter_type = 'FILE'
+            config.csv_type = 'SPLIT'
+          end
+          allow_any_instance_of(Wprof::Reporters::FileReport).to receive(:write_split_file).and_return(data)
+        end
+        it 'validate data recived' do
+          expect(record.keys).to eq(spect_param)
+        end
+      end
     end
   end
 end
