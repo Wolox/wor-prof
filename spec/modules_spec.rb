@@ -3,7 +3,10 @@ URL = 'http://www.testexternal.com/external'.freeze
 RSpec.describe 'Wprof Generate Profiling' do
   context 'When include Wprof to a class' do
     before do
-      allow(Rails).to receive_messages(wprof: { custom_methods: ['foo_method'] })
+      WProf::Configuration.configure do |config|
+        config.custom_methods = ['foo_method']
+      end
+      # allow(Rails).to receive_messages(wprof: { custom_methods: ['foo_method'] })
       require 'support/mocks_and_stubs/class_for_modules'
       allow(GenProf).to receive_messages(deploy_reporter: self)
       stub_request(:get, URL)

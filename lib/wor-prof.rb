@@ -8,7 +8,6 @@ require 'wprof/wprof_reporter'
 require 'wprof/gen_prof'
 require 'wprof/wprof_subscriptors'
 
-
 module Wprof
   def self.included(base)
     load 'wprof/wprof_modules.rb'

@@ -33,26 +33,23 @@ RSpec.describe 'Wprof Generate Profiling' do
       describe 'And reporter Type is EXTERNAL' do
         before do
           stub_request(:post, 'http://www.wprof.com/reporter')
+          WProf::Configuration.configure do |config|
+            config.reporter_type = 'EXTERNAL'
+            config.external_url = 'http://www.wprof.com/reporter'
+            config.external_headers = { headers: { 'User-Agent' => 'Httparty' } }
+          end
         end
         it 'validate ok status' do
-          allow(Rails).to receive_messages(wprof: { reporter_type: 'EXTERNAL',
-                                                    external_url: 'http://www.wprof.com/reporter' })
           expect(record.ok?).to eq(true)
         end
         it 'validate body' do
-          allow(Rails).to receive_messages(wprof: { reporter_type: 'EXTERNAL',
-                                                    external_url: 'http://www.wprof.com/reporter' })
           expect(record.request.options[:body]).to eq(data)
         end
         it 'add headers and validate' do
-          headers = { headers: { 'User-Agent' => 'Httparty' } }
-          allow(Rails).to receive_messages(wprof: { reporter_type: 'EXTERNAL',
-                                                    external_url: 'http://www.wprof.com/reporter',
-                                                    external_headers: headers })
-          expect(record.request.options[:headers]).to eq(headers[:headers])
+          expect(record.request.options[:headers]).to eq(WProf::Config.external_headers[:headers])
         end
         it 'send post without set url expected handled error' do
-          allow(Rails).to receive_messages(wprof: { reporter_type: 'EXTERNAL' })
+          WProf::Config.external_url = nil
           specific_msg = 'bad argument (expected URI object or URI string)'
           msj = "An error was raised when WProf tried to send data to reporter: #{specific_msg}"
           expect(record).to eq(msj)
