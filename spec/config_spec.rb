@@ -53,6 +53,7 @@ RSpec.describe 'Wprof Configuration File' do
       before do
         WProf::Configuration.configure do |config|
           config.csv_type = 'MIX'
+          config.disable_wprof = true
         end
       end
       it 'must bring config value' do

@@ -5,6 +5,7 @@ RSpec.describe 'Wprof Generate Profiling' do
     before do
       WProf::Configuration.configure do |config|
         config.custom_methods = ['foo_method']
+        config.disable_wprof = true
       end
       # allow(Rails).to receive_messages(wprof: { custom_methods: ['foo_method'] })
       require 'support/mocks_and_stubs/class_for_modules'

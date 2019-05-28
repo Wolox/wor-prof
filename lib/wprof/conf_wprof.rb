@@ -2,6 +2,11 @@ module WProf
   module Configuration
     def self.configure
       yield Config
+      initiate_wprof
+    end
+
+    def self.initiate_wprof
+      WprofSubscriptors.subscriptors unless WProf::Config.disable_wprof
     end
   end
 
@@ -15,7 +20,8 @@ module WProf
       external_url: nil,
       external_headers: nil,
       custom_methods: nil,
-      file_path: Rails.root.to_s
+      file_path: Rails.root.to_s,
+      disable_wprof: false
     }.freeze
 
     module_function

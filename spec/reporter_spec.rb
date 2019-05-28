@@ -37,6 +37,7 @@ RSpec.describe 'Wprof Generate Profiling' do
             config.reporter_type = 'EXTERNAL'
             config.external_url = 'http://www.wprof.com/reporter'
             config.external_headers = { headers: { 'User-Agent' => 'Httparty' } }
+            config.disable_wprof = true
           end
         end
         it 'validate ok status' do
@@ -61,6 +62,7 @@ RSpec.describe 'Wprof Generate Profiling' do
           WProf::Configuration.configure do |config|
             config.reporter_type = 'FILE'
             config.csv_type = 'SPLIT'
+            config.disable_wprof = true
           end
           allow_any_instance_of(Wprof::Reporters::FileReport).to receive(:write_split_file).and_return(data)
         end

@@ -36,9 +36,10 @@ class WprofGenerator < Rails::Generators::Base
       ## Define your own path for save Files when Reporter Type is FILE
       ## By default Wor-Prof use Rails.root
       # config.file_path = '/home/mcolombo/examplefolder'
+      ## Enable/Disable Wprof
+      ## Default: false
+      # config.disable_wprof = false
     end
-    ## Initiate Wprof
-    WprofSubscriptors.subscriptors
     CONTENT
   end
 end
