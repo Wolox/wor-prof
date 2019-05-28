@@ -33,29 +33,41 @@ RSpec.describe 'Wprof Generate Profiling' do
       describe 'And reporter Type is EXTERNAL' do
         before do
           stub_request(:post, 'http://www.wprof.com/reporter')
+          WProf::Configuration.configure do |config|
+            config.reporter_type = 'EXTERNAL'
+            config.external_url = 'http://www.wprof.com/reporter'
+            config.external_headers = { headers: { 'User-Agent' => 'Httparty' } }
+            config.disable_wprof = true
+          end
         end
         it 'validate ok status' do
-          allow(Rails).to receive_messages(wprof: { reporter_type: 'EXTERNAL',
-                                                    external_url: 'http://www.wprof.com/reporter' })
           expect(record.ok?).to eq(true)
         end
         it 'validate body' do
-          allow(Rails).to receive_messages(wprof: { reporter_type: 'EXTERNAL',
-                                                    external_url: 'http://www.wprof.com/reporter' })
           expect(record.request.options[:body]).to eq(data)
         end
         it 'add headers and validate' do
-          headers = { headers: { 'User-Agent' => 'Httparty' } }
-          allow(Rails).to receive_messages(wprof: { reporter_type: 'EXTERNAL',
-                                                    external_url: 'http://www.wprof.com/reporter',
-                                                    external_headers: headers })
-          expect(record.request.options[:headers]).to eq(headers[:headers])
+          expect(record.request.options[:headers]).to eq(WProf::Config.external_headers[:headers])
         end
         it 'send post without set url expected handled error' do
-          allow(Rails).to receive_messages(wprof: { reporter_type: 'EXTERNAL' })
+          WProf::Config.external_url = nil
           specific_msg = 'bad argument (expected URI object or URI string)'
           msj = "An error was raised when WProf tried to send data to reporter: #{specific_msg}"
           expect(record).to eq(msj)
+        end
+      end
+
+      describe 'And reporter Type is FILE' do
+        before do
+          WProf::Configuration.configure do |config|
+            config.reporter_type = 'FILE'
+            config.csv_type = 'SPLIT'
+            config.disable_wprof = true
+          end
+          allow_any_instance_of(Wprof::Reporters::FileReport).to receive(:write_split_file).and_return(data)
+        end
+        it 'validate data recived' do
+          expect(record.keys).to eq(spect_param)
         end
       end
     end

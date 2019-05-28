@@ -3,9 +3,9 @@ module Wprof
     module FileReport
       def generate_file_report
         require 'csv'
-        csv_type = WProf::Config.get_value(:csv_type) # rubocop:disable Lint/UselessAssignment
+        csv_type = WProf::Config.get_value(:csv_type)
         path = WProf::Config.get_value(:file_path)
-        send("write_#{csv_type.underscore}_file", path)
+        send("write_#{csv_type.downcase}_file", path)
       end
 
       def write_mix_file(path)
