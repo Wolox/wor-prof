@@ -18,11 +18,24 @@ Add the next line to the gemfile from your Rails application:
 gem 'wor-prof'
 ```
 
-And then, execute:
+execute:
 ```bash
 $ bundle install
 ```
+
+And then, execute:
+```bash
+$ rails generate wprof (or copy initializer by yourself)
+```
 **That's it!!** At server execution, WProf immediately begins to work with default settings, so you won't need to configure anything if it matches with your needs, otherwise you can check **Available Settings**.
+
+`If you don't run wprof generator, you must be initialized Wprof. For do this, add the next line into any rails initializers`
+
+```ruby
+WProf::Configuration.initiate_wprof
+```
+
+`We highest recommended execute "rails generate wprof"`
 
 ---
 
@@ -69,9 +82,9 @@ Done, with this WProf will be registering the execution time of said method ever
 WProf contains a list of default settings which can all be altered by others availables as user's preferences demands. In order to do that, create a file in 'config/initializers' (RailsApp.Root >> config >> initializers >> wprof.rb). Inside, you must define the following configuration:
 
 ```ruby
-Rails.application.configure do
-  config.x.wprof.db_runtime = true
-  config.x.wprof.reporter_type = 'FILE'
+WProf::Configuration.configure do |config|
+  config.db_runtime = true
+  config.reporter_type = 'FILE'
 end
 ```
 > In case of not correctly configuring an option or just skip it, the value would be default.
@@ -80,70 +93,77 @@ To avoid this configuration manually using the **configuration generator** with 
 
 Following the complete list of available settings and their meaning.
 
-### config.x.wprof.db_runtime
+### config.db_runtime
 Sets whether it shows or not the data "db_runtime" inside the report.
 
 > Possible values: true o false
 
 > Default: true
 
-### config.x.wprof.reporter_type 
+### config.reporter_type 
 Sets report type, meaning, how to show the obtained data. There are currently 4 available types, see "Reports" section for more information.
 
 > Possible values: LOGGER, FILE, DATABASE, EXTERNAL
 
 > Default: LOGGER
 
-### config.x.wprof.csv_type
+### config.csv_type
 When the report is defined as a CSV file there are two ways of generate it.
 * **MIX:** generates one CSV file where every data captured by WProf is saved. This file only contains 2 columns: in the first one is the field and in the second one the data.
 * **SPLIT:** Divides storage in three different files, one for each record type. This significantly improves reading since every field is held as the file's header and the data in rows is split by comma... As it should be, of course... Why mix then?, I don't know, it could be useful for someone!
 > Possible values: MIX, SPLIT.
 > Default: SPLIT
 
-### config.x.wprof.async
+### config.async
 Sets whether the report is being generated sinchronously or not. **Take note: asynchronous mode requires extra steps, see "asynchronism" section for more information.**
 > Possible values: false, true
 > Default: false
 
-### config.x.wprof.httparty_methods_to_trace
+### config.httparty_methods_to_trace
 HTTParty's method captured by WProf. By default, more common ones are set and it's recommended not to modify.
 This being said, there's no problem in taking out some of the array, however take special care in adding HTTParty's methods which doesn't return an http request.
 > Possible values: what you want and need, must be an **array of strings**.
 > Default: ['get', 'put', 'delete', 'post']
 
-### config.x.wprof.external_url
+### config.external_url
 In case you configure reporter_type as External, you must indicate the URL which will receive the HTTP petition.
 > Possible values: any string that corresponds to an URL. Example: 'http://example-url/reporter'
 > Default: nil
 
-### config.x.wprof.external_headers
+### config.external_headers
 To add a header to the http request ("external" report type), you must define it in this setting. This must be a **HASH of RUBY**, exactly as HTTParty expects (internally Wprof uses HTTParty to send a request). An example would be:
 
 ``` ruby
-config.x.wprof.external_headers = { headers: {'User-Agent' => 'Httparty'}}
+config.external_headers = { headers: {'User-Agent' => 'Httparty'}}
 ```
 > Possible : Any valid hash, must respect primary key as "headers" (check example below)
 > Default: nil
 
-### config.x.wprof.custom_methods
+### config.custom_methods
 If you want to capture response times of an specific method inside a class, it's not enough including the module, you'll need to indicate WProf exactly which is the one it has to capture.
 This list of methods must be contained in this option in a **array of Ruby** and it has to be strings.
 Example:
 ``` ruby
-config.x.wprof.custom_methods = [ 'my_great_method' ]
+config.custom_methods = [ 'my_great_method' ]
 ```
 > Possible values: any method's name in string format, within an array.  Default: nil
 
-### config.x.wprof.file_path
+### config.file_path
 
 When "FILE" is used as an output, this option allows you to choose the files destination. This must be a valid route, as string, with reading permission for Rails and also be a folder.
 Example: 
 ``` ruby
-config.x.wprof.file_path = '/home/mcolombo/examplefolder'
+config.file_path = '/home/mcolombo/examplefolder'
 ```
 > Possible values: any string that correctly represents a PATH to a directory.
 > Default: Rails.root is used, so, root is Rails application.
+
+### config.disable_wprof
+
+Enable or Disable Wprof when this single line.
+
+> Possible values: true or false.
+> Default: false.
 
 ---
 
@@ -160,7 +180,7 @@ To begin to modify options from available settings, you must create a config fil
 ```
 rails generate wprof
 ```
-This generates a model of the configuration's file with all the available options seen in "available configurations" section.
+This generates a model of the configuration's file with all the available options seen in "available configurations" section. It's necessary for initializer Wprof.
 
 ### Data Model Generator
 
@@ -194,11 +214,11 @@ Data captured and reported by WProf vary depending on which record they come, al
 * **url:** Endpoint that received the petition.
 * **db_runtime:** total time when it was absorbed by the database (included in total_time).
 
-### Únicos para los Servicios (Httparty).
+### Unique for the services (Httparty).
 
-* **code:** Código de respuesta recibido (Status), ej. 200, 404, etc.
-* **service_hostname:** Hostname del servicio consumido.
-* **request_uri:** Uri del endpoint consumido.
+* **code:** Response code received (Status), eg. 200, 404, etc.
+* **service_hostname:** Hostname of service.
+* **request_uri:** Uri of endpoint.
 
 ### Unique for services (Httparty).
 
@@ -291,15 +311,13 @@ The options to be set are: external_url and external_headers. See Configurations
 
 ## Asynchronism.
 
-WProf by default reports all the information **synchronous**, although it’s possible to configure the tool in order to do this process **asynchronous**. To achieve this, you must first activate the option through config field "config.x.wprof.async = true", however this is not enough. For all of the report be made asynchronous, you must have functional and operational **Sidekiq**, since WProf uses it to that purpose. If you’re not familiar with the tool, you could give it a look to its [repository by clicking here!.](https://github.com/mperham/sidekiq).
+WProf by default reports all the information **synchronous**, although it’s possible to configure the tool in order to do this process **asynchronous**. To achieve this, you must first activate the option through config field "config.async = true", however this is not enough. For all of the report be made asynchronous, you must have functional and operational **Sidekiq**, since WProf uses it to that purpose. If you’re not familiar with the tool, you could give it a look to its [repository by clicking here!.](https://github.com/mperham/sidekiq).
 
 ---
 
 ## Handled errors.
 
 Any error among the capture and report of the information **MUSTN’T** interrupt the normal functioning of your Rails application. If this is the case, please report it. During the execution, could show up two errors in application’s logger.
-WProf ERROR when try parsing service response: 
-An error was raised when WProf tried to send data to reporter: This is the most common error and it will appear if the data sending to the selected destination (meaning Logger, Database, File o External) has failed.
 
 ```WProf ERROR when try parsing service response:``` This error may appear if HTTParty wouldn’t be able to capture some data.
 

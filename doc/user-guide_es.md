@@ -8,18 +8,32 @@ Wor-prof (Wprof) es una gema para Ruby On Rails cuyo único objetivo es el medir
 
 El primer paso es instalar la gema (por supuesto) y la forma es bien conocida, pero por si acaso acá están los pasos a seguir.
 
-### Installation
+### Instalación
 Agregar la siguiente línea en el gemfile de tu aplicación Rails:
 
 ```ruby
 gem 'wor-prof'
 ```
 
-Y luego ejecute:
+ejecute:
 ```bash
 $ bundle install
 ```
+
+Por último, ejecute:
+```bash
+$ rails generate wprof (o cree/copie el initializer usted mismo)
+```
+
 **Eso es todo!!** Al correr el servidor Wprof comienza inmediatamente a trabajar con la configuración por defecto por lo que no hay que configurar nada si coincide con sus necesidades, pero si no es así puede consultar la sección de **Configuraciones Disponibles**.
+
+`Si no corre el generador de Wprof, debe inicializar Wprof. Para hacer esto, agregue la siguiente linea en cualquier initializers`
+
+```ruby
+WProf::Configuration.initiate_wprof
+```
+
+`Es altamente recomendable que ejecue "rails generate wprof"`
 
 ---
 
@@ -61,77 +75,84 @@ Listo, con esto Wprof estará registrando el tiempo de ejecución de dicho méto
 
 ## Configuraciones disponibles.
 
-Por defecto Wprof continúe una lista de configuraciones por defecto, pero todas estas pueden ser modificadas por otras disponibles de acuerdo a las preferencias del usuario. Para lograr esto se debe crear un archivo en 'config/initializers' (RailsApp.Root >> config >> initializers >> wprof.rb).
+Por defecto Wprof contiene una lista de configuraciones por defecto, pero todas estas pueden ser modificadas por otras disponibles de acuerdo a las preferencias del usuario. Para lograr esto se debe crear un archivo en 'config/initializers' (RailsApp.Root >> config >> initializers >> wprof.rb).
 Dentro del mismo se debe definir la configuración de esta manera: 
 
 ```ruby
-Rails.application.configure do
-  config.x.wprof.db_runtime = true
-  config.x.wprof.reporter_type = 'FILE'
+WProf::Configuration.configure do |config|
+  config.db_runtime = true
+  config.reporter_type = 'FILE'
 end
 ```
 > En caso de no configurar correctamente una opción u omitirla, se tomarán los valores por defecto.
 
-Para evitar esta configuración manualmente utilizando el **Generador de Configuración** con el comando "rails generate wprof" (consulte la sección de generadores).
+Puede evitar esta configuración manualmente utilizando el **Generador de Configuración** con el comando "rails generate wprof" (consulte la sección de generadores).
 
 A continuación se ofrece la lista completa de configuraciones disponibles y sus significados.
 
-### config.x.wprof.db_runtime
+### config.db_runtime
 Define si se debe mostrar o no el dato "db_runtime" dentro del reporte.
 > Valores Posibles: true o false
 > Por defecto: true
 
-### config.x.wprof.reporter_type 
+### config.reporter_type 
 Establece el tipo de reporte, es decir, como exponen los datos obtenidos, existen cuatro tipo disponible actualmente, Ver sección "Reportes" para más información.
 > Valores Posibles: LOGGER, FILE, DATABASE, EXTERNAL
 > Por defecto: LOGGER
 
-### config.x.wprof.csv_type
+### config.csv_type
 Cuando se define el reporte como un archivo CSV existen dos formas de generarlos.
 * **MIX:** Genera un único archivo CSV donde se guardan los datos de **todo** lo que captura WProf. Este archivo solo tiene 2 columnas: En la primera se guarda el campo y en la segunda el dato.
 * **SPLIT:** Divide el almacenamiento en tres archivos distintos, uno por cada tipo de registro. Esto mejora significamente la lectura ya que cada campo está como encabezado del archivo y los datos en la filas separados por coma... como debe ser claro... ¿Por que mix entonces?, no sé, a alguno le puede servir!
 > Valores Posibles: MIX, SPLIT
 > Por defecto: SPLIT
 
-### config.x.wprof.async
+### config.async
 Define si el reporte se gestará de forma Sincrónica o Asincronica. **Tome nota: la forma asincrónica requiere pasos adicionales, consulte la sección de "Asincronismo" para más información**
 > Valores Posibles: false, true
 > Por defecto: false
 
-### config.x.wprof.httparty_methods_to_trace
+### config.httparty_methods_to_trace
 Métodos de HTTParty que WProf va a capturar. Por defecto se colocan los más comunes y se recomienda no modificar. Dicho esto, no hay problema en quitar algunos del array, pero tenga especial cuidado en agregar métodos de HTTParty que no devuelvan un request HTTP).
 > Valores Posibles: Los que quiera, debe si o si ser un **Array** de strings.
 > Por defecto: ['get', 'put', 'delete', 'post']
 
-### config.x.wprof.external_url
+### config.external_url
 En caso de que se configure el reporter_type como External, se debe indicar la URL a la que se enviará la petición HTTP.
 > Valores posibles: Cualquier cadena de texto que corresponda a una URL. Ejemplo: 'http://example-url/reporter'
 > Por defecto: nil
 
-### config.x.wprof.external_headers
+### config.external_headers
 Para agregar una cabecera al request HTTP (para el tipo de reporte "External"), debe definirlo en esta configuración. La misma debe ser un **HASH de RUBY** tal cual como espera HTTParty recibir (internamente Wprof utiliza HTTParty para enviar el request). Un ejemplo de esto sería:
 ``` ruby
-config.x.wprof.external_headers = { headers: {'User-Agent' => 'Httparty'}}
+config.external_headers = { headers: {'User-Agent' => 'Httparty'}}
 ```
 > Valores posibles: Cualquier hash válido, debe respetarse la primera clave como "headers" (ver ejemplo arriba)
 > Por defecto: nil
 
-### config.x.wprof.custom_methods
+### config.custom_methods
 Si desea capturar los tiempos de respuesta de un método específico dentro de una clase, no basta con incluir el módulo, debe indicarle a Wprof cual es exactamente aquel que desea capturar. Esta lista de métodos debe estar contenida en está opción dentro de un **Array de Ruby** y deben ser strings. Ejemplo:
 ``` ruby
-config.x.wprof.custom_methods = [ 'my_great_method' ]
+config.custom_methods = [ 'my_great_method' ]
 ```
 > Valores posibles: Cualquier nombre de método en formato string, contenido en un array.
 > Por defecto: nil
 
-### config.x.wprof.file_path
+### config.file_path
 
 Cuando se utiliza "FILE" como salida de datos, esta opción permite elegir la ruta de destino de los archivos. Esta debe ser una ruta válida, en formato string, con permisos de escritura para la aplicación Rails y cuyo último valor debe ser una carpeta. Ejemplo: 
 ``` ruby
-config.x.wprof.file_path = '/home/mcolombo/examplefolder'
+config.file_path = '/home/mcolombo/examplefolder'
 ```
 > Valores posible: Cualquier string que represente correctamente un PATH hasta un directorio.
 > Por defecto: Se utiliza 'Rails.root', es decir, la raíz de su aplicación Rails.
+
+### config.disable_wprof
+
+Activa o Desactiva Wprof con una simple línea
+
+> Valores posibles: true or false.
+> Por defecto: false.
 
 ---
 
@@ -280,7 +301,7 @@ Las opciones a configurar son: external_url y external_headers. Consulte la secc
 
 ## Asincronismo.
 
-WProf por defecto reporta toda la información de manera ***sincronica**, sin embargo es posible configurar la herramienta para que este proceso lo haga de forma **asincronica**. Para lograr esto se debe en primer lugar activar la opción mediante la configuración del campo "config.x.wprof.async = true", sin embargo esto no es suficiente.
+WProf por defecto reporta toda la información de manera ***sincronica**, sin embargo es posible configurar la herramienta para que este proceso lo haga de forma **asincronica**. Para lograr esto se debe en primer lugar activar la opción mediante la configuración del campo "config.async = true", sin embargo esto no es suficiente.
 Para que todo el reporte se efectúe Asincrónicamente, es necesario tener funcional y operativo **Sidekiq**, ya que WProf lo utiliza para tal fin. Si no está familiarizado con la herramienta, puede buscar más información en el [repositorio de la misma haciendo click aquí!](https://github.com/mperham/sidekiq).
 
 ---

@@ -16,9 +16,14 @@ Add the next line to the gemfile from your Rails application:
 gem 'wor-prof'
 ```
 
-And then, execute:
+execute:
 ```bash
 $ bundle install
+```
+
+And then, execute:
+```bash
+$ rails generate wprof (or copy initializer by yourself)
 ```
 **That's it!!** At server execution, WProf immediately begins to work with default settings, so you won't need to configure anything if it matches with your needs, otherwise you can check **Available Settings** [here!](https://github.com/Wolox/wor-prof/wiki/User-Guide#available-configurations)
 
