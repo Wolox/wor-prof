@@ -50,6 +50,12 @@ RSpec.describe 'Wprof Configuration File' do
     end
 
     context 'And it is in config' do
+      before do
+        WProf::Configuration.configure do |config|
+          config.csv_type = 'MIX'
+          config.disable_wprof = true
+        end
+      end
       it 'must bring config value' do
         expect(config.get_value(:csv_type)).to eq('MIX')
       end
